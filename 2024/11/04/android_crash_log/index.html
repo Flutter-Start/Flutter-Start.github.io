@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android 閃退日誌保存 | Flutter Start</title>
+
+  
+  <meta name="author" content="Aki Yu">
+  
+
+  
+  <meta name="description" content="雖然程式有點舊了  但解題的思路還是可以參考參考的很多時候想要看一下閃退的問題，又不好安裝firebase時，可以考慮自己實作一下
+先要個存儲權限1&amp;lt;uses-permission android:name=&amp;quot;android.permission.WRITE_EXTERNAL_STORAGE&amp;quot;/&amp;gt;">
+  
+
+  
+  
+  <meta name="keywords" content="android,app">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Android 閃退日誌保存"/>
+
+  <meta property="og:site_name" content="Flutter Start"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Flutter Start" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Flutter Start</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Flutter</a></li>
+      
+        <li><a href="/about">About</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Android 閃退日誌保存</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2024/11/04/android_crash_log/" rel="bookmark">
+        <time class="entry-date published" datetime="2024-11-04T02:22:36.000Z">
+          2024-11-04
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>雖然程式有點舊了  但解題的思路還是可以參考參考的<br>很多時候想要看一下閃退的問題，又不好安裝firebase時，可以考慮自己實作一下</p>
+<h2 id="先要個存儲權限"><a href="#先要個存儲權限" class="headerlink" title="先要個存儲權限"></a>先要個存儲權限</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+
+<h2 id="在最一開始時啟動"><a href="#在最一開始時啟動" class="headerlink" title="在最一開始時啟動"></a>在最一開始時啟動</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import android.app.Activity;</span><br><span class="line">import android.os.Bundle;</span><br><span class="line"> </span><br><span class="line">public class CaptureExceptionActivity extends Activity &#123;</span><br><span class="line"></span><br><span class="line"> @Override</span><br><span class="line"> public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line"> super.onCreate(savedInstanceState);</span><br><span class="line"> </span><br><span class="line">    Thread.setDefaultUncaughtExceptionHandler(new CustomizedExceptionHandler(&quot;/sdcard/&quot;));</span><br><span class="line"> </span><br><span class="line">    setContentView(R.layout.main);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="實作-UncaughtExceptionHandler"><a href="#實作-UncaughtExceptionHandler" class="headerlink" title="實作 UncaughtExceptionHandler"></a>實作 UncaughtExceptionHandler</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">import java.io.File;</span><br><span class="line">import java.io.FileWriter;</span><br><span class="line">import java.io.PrintWriter;</span><br><span class="line">import java.io.StringWriter;</span><br><span class="line">import java.io.Writer;</span><br><span class="line">import java.lang.Thread.UncaughtExceptionHandler;</span><br><span class="line">import java.text.SimpleDateFormat;</span><br><span class="line">import java.util.Date;</span><br><span class="line"> </span><br><span class="line">import android.os.Environment;</span><br><span class="line">import android.util.Log;</span><br><span class="line"> </span><br><span class="line">public class CustomizedExceptionHandler implements UncaughtExceptionHandler &#123;</span><br><span class="line"> </span><br><span class="line">    private UncaughtExceptionHandler defaultUEH;</span><br><span class="line">    private String localPath;</span><br><span class="line">    public CustomizedExceptionHandler(String localPath) &#123;</span><br><span class="line">        this.localPath = localPath;</span><br><span class="line">        this.defaultUEH = Thread.getDefaultUncaughtExceptionHandler();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void uncaughtException(Thread t, Throwable e) &#123;</span><br><span class="line"> </span><br><span class="line">    final Writer stringBuffSync = new StringWriter();</span><br><span class="line">    final PrintWriter printWriter = new PrintWriter(stringBuffSync);</span><br><span class="line">    e.printStackTrace(printWriter);</span><br><span class="line">    String stacktrace = stringBuffSync.toString();</span><br><span class="line">    printWriter.close();</span><br><span class="line">    </span><br><span class="line">    if (localPath != null) &#123;</span><br><span class="line">    writeToFile(stacktrace);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">     defaultUEH.uncaughtException(t, e);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line">private void writeToFile(String currentStacktrace) &#123;</span><br><span class="line"> try &#123;</span><br><span class="line"> </span><br><span class="line">    File dir = new File(Environment.getExternalStorageDirectory(),</span><br><span class="line">    &quot;Crash_Reports&quot;);</span><br><span class="line">    if (!dir.exists()) &#123;</span><br><span class="line">    dir.mkdirs();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    SimpleDateFormat dateFormat = new SimpleDateFormat(</span><br><span class="line">    &quot;yyyy_MM_dd_HH_mm_ss&quot;);</span><br><span class="line">    Date date = new Date();</span><br><span class="line">    String filename = dateFormat.format(date) + &quot;.STACKTRACE&quot;;</span><br><span class="line">    </span><br><span class="line">    File reportFile = new File(dir, filename);</span><br><span class="line">    FileWriter fileWriter = new FileWriter(reportFile);</span><br><span class="line">    fileWriter.append(currentStacktrace);</span><br><span class="line">    fileWriter.flush();</span><br><span class="line">    fileWriter.close();</span><br><span class="line"> &#125; catch (Exception e) &#123;</span><br><span class="line">    Log.e(&quot;ExceptionHandler&quot;, e.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/android/">android</a><a href="/tags/app/">app</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2024 Aki Yu
+    
+  </p>
+</footer>
+    
+    
+  </div>
+</div>
+</body>
+</html>
