@@ -3,21 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Flutter Start</title>
+  <title>小白單機中文亂碼問題 | Flutter Start</title>
 
   
   <meta name="author" content="Aki Yu">
   
 
   
+  <meta name="description" content="因為部份的小白單印表機太舊了，僅支援 big5 編碼，所以在送印前要先將字串轉為 byte Array (意即 Uint8List), 以下為範例
+123Uint8List encBig5 = await CharsetConverter.encode(    &amp;#x27;Big5&amp;#x27;, &amp;">
+  
 
+  
+  
+  <meta name="keywords" content="flutter,thermal printer,encode">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  
+  <meta property="og:title" content="小白單機中文亂碼問題"/>
 
   <meta property="og:site_name" content="Flutter Start"/>
 
@@ -54,12 +60,11 @@
 </header>
 
     <main class="site-main posts-loop">
-    
-  <article>
+    <article>
 
   
     
-    <h3 class="article-title"><a href="/2024/11/06/thermal-printer/"><span>小白單機中文亂碼問題</span></a></h3>
+    <h3 class="article-title"><span>小白單機中文亂碼問題</span></h3>
     
   
 
@@ -107,67 +112,16 @@
   </div>
 </article>
 
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2024/11/04/android_crash_log/"><span>Android 閃退日誌保存</span></a></h3>
-    
   
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2024/11/04/android_crash_log/" rel="bookmark">
-        <time class="entry-date published" datetime="2024-11-04T02:22:36.000Z">
-          2024-11-04
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>雖然程式有點舊了  但解題的思路還是可以參考參考的<br>很多時候想要看一下閃退的問題，又不好安裝firebase時，可以考慮自己實作一下</p>
-<h2 id="先要個存儲權限"><a href="#先要個存儲權限" class="headerlink" title="先要個存儲權限"></a>先要個存儲權限</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot;/&gt;</span><br></pre></td></tr></table></figure>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/android/">android</a><a href="/tags/app/">app</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
 
 
 
 
-<nav class="pagination">
-  
-  
-</nav>
+
+
+
+
     </main>
 
     <footer class="site-footer">
